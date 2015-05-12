@@ -4,7 +4,7 @@ jQuery与ECharts整合的插件
 # Usage
 Just install, import and write
 
-## require
+## Require
 需要引入 [jQuery](http://jquery.com/) 和 [ECharts](http://echarts.baidu.com/index.html)
 
 ## Import
@@ -16,10 +16,10 @@ Just install, import and write
 
 ## Run
 
-* $(".chart").chart(option);	//option为echarts所需option对象;
-* $("#chart").chart(options);	//options为参数对象
+	$(".chart").chart(option);	//option为echarts所需option对象;
+	$("#chart").chart(options);	//options为参数对象
 
-## parameter
+## Parameter
 
 * **options.showLoading** 	-- 可选，默认为true， 是否显示londing动画
 * **options.loadingOption** -- 可选， echarts的loading对象
