@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>jquery.echarts.js</title>
+
+    <!-- Bootstrap core CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+<!--    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="index.html">jquery.echarts.js</a>
+        </div>
+      </div>
+    </nav>-->
+
+    <div class="container theme-showcase" role="main">
+        <div class="page-header"><h1>eCharts</h1></div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="chart" style="width: 100%;height: 300px;"></div>
+            </div>
+            <div class="col-md-6">
+                <div class="chart" style="width: 100%;height: 300px;"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div id="map" style="width: 100%;height: 300px;"></div>
+            </div>
+            <div class="col-md-6">
+                <div id="chartTheme" style="width: 100%;height: 300px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+<!--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>-->
+    <script src="http://echarts.baidu.com/doc/example/www2/js/echarts-all.js"></script>
+    <script type="text/javascript" src="echarts-theme.js"></script>
+    <script type="text/javascript" src="../jquery.echarts.js"></script>
+
+    <script>
+
+        var option = {
+            title : {
+                text: '某楼盘销售情况',
+                subtext: '纯属虚构'
+            },
+            tooltip : {
+                trigger: 'axis'
+            },
+            legend: {
+                data:['意向','预购','成交']
+            },
+            toolbox: {
+                show : true,
+                feature : {
+                    mark : {show: true},
+                    dataView : {show: true, readOnly: false},
+                    magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+                    restore : {show: true},
+                    saveAsImage : {show: true}
+                }
+            },
+            calculable : true,
+            xAxis : [
+                {
+                    type : 'category',
+                    boundaryGap : false,
+                    data : ['周一','周二','周三','周四','周五','周六','周日']
+                }
+            ],
+            yAxis : [
+                {
+                    type : 'value'
+                }
+            ],
+            series : [
+                {
+                    name:'成交',
+                    type:'line',
+                    smooth:true,
+                    itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                    data:[10, 12, 21, 54, 260, 830, 710]
+                },
+                {
+                    name:'预购',
+                    type:'line',
+                    smooth:true,
+                    itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                    data:[30, 182, 434, 791, 390, 30, 10]
+                },
+                {
+                    name:'意向',
+                    type:'line',
+                    smooth:true,
+                    itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                    data:[1320, 1132, 601, 234, 120, 90, 20]
+                }
+            ]
+        };
+
+        function drawFlowMap(json,chart) {
+            var data = json || [];
+
+            var mapData = [];
+            for (var i = 0, len = data.length; i < len; i++) {
+                var item = data[i];
+                var prov = item.province || "";
+                var value = item.pv;
+                mapData[i] = {name:prov, value: value};
+            }
+
+            var max = Math.max.apply(Math, data.map(function(item){return item.pv;}));
+
+            return {
+                title : {
+                    text: '来访流量分布图',
+                    x:'left'
+                },
+                tooltip : {
+                    trigger: 'item'
+                },
+                dataRange: {
+                    min: 0,
+                    max: max,
+                    color:['#6199F1','#8DDEFA'],
+                    text:['高','低']           // 文本，默认为数值文本
+                },
+                series : [
+                    {
+                        name: '国内分布',
+                        type: 'map',
+                        mapType: 'china',
+                        roam: false,
+                        itemStyle:{
+                            normal:{label:{show:true}},
+                            emphasis:{label:{show:true}}
+                        },
+                        data:mapData
+                    }
+                ]
+            };
+
+        };
+
+        function getOption() {
+            return option;
+        }
+
+        var url = "./data.json";
+        var obj = {};
+
+        // class类选择
+        $(".chart").chart(option);
+
+        // 添加主题
+        $("#chartTheme").chart({"option":getOption,"theme":EchartsThemes.default});
+
+        // 异步加载获取数据
+        $("#map").chart({"option":drawFlowMap,"url":url,"data":obj});
+
+    </script>
+
+  </body>
+</html>
