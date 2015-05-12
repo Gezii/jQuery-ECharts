@@ -1,12 +1,11 @@
-<h1>jQuery-ECharts</h1>
-<p>jQuery与ECharts整合的插件</p>
+# jQuery-ECharts
 
-<h1>Usage</h1>
-<p>Just install, import and write</p>
+jQuery与ECharts整合的插件
 
-<h2>Import<h2>
-<pre>
+# Usage
+Just install, import and write
+
+## Import
 	<head>
 		<script type="text/javascript" src="jquery.echarts.js"></script>
 	</head>	
-<pre>
