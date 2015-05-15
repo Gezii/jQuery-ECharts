@@ -29,7 +29,7 @@
                 fontSize : 20
             }
         },
-        on     : "",      //绑定的事件，参见echarts的chart.on
+        onClick: function () {null;},      //绑定的单击事件，参见echarts的chart.on
         theme  : {},
         option : {},      //echarts画图的option对象 或 可返回option对象的function
         url    : "",      //待加载数据的URL地址
@@ -83,14 +83,18 @@
             });
         } else {
             var option = typeof opt.option == 'function' ?
-                opt.option.call(this) :
+                opt.option.call(this,that.chart) :
                 opt.option;
             this.setOption(option);
         }
     };
 
     Chart.prototype.setOption = function(option) {
-        this.options.on ? this.chart.on = this.options.on : null;   //绑定事件
+        var fun = this.options.onClick;
+        if (fun instanceof Function) {
+            this.chart.on('click', this.options.onClick);   //绑定事件
+        }
+        
         this.chart.setOption(option);
         this.chart.hideLoading();
     };
@@ -117,6 +121,6 @@
 
     $.fn.chart.noConflict = function () {
         $.fn.chart = old;
-        return this
+        return this;
     }
 })(jQuery,echarts);
