@@ -23,5 +23,5 @@
   "dependencies": {
     "echarts": "~2.2.7",
     "jquery": "~2.2.7"
-  },
+  }
 }
