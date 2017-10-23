@@ -1,0 +1,27 @@
+{
+  "name": "jQuery-ECharts",
+  "homepage": "https://github.com/caiorogerio/jQuery-ECharts",
+  "description": "jQuery integrates with ECharts plugins, loading data asynchronously",
+  "main": "jquery.echarts.js",
+  "keywords": [
+    "jquery",
+    "chart",
+    "echarts",
+    "ajax"
+  ],
+  "authors": [
+    "Caio Rogerio"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "echarts": "~2.2.7",
+    "jquery": "~2.1.4"
+  }
+}
